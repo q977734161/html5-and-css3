@@ -248,9 +248,272 @@
 			}
 使用选择器在页面插入内容
 	1.使用选择器来插入
-		
+		使用before选择器在元素前面插入内容，使用after选择器在元素后面插入内容，在选择器的content属性中定义要插入的内容。
+		例如：
+			<style type='text/css'>
+				h2:before{
+					content:'COLUMN';
+					color:white;
+					background-color:orange;
+					font-family:'Comic Sans MS',Helvetica;
+					padding:1px 5px;
+					margin-right:10px;
+				}
+			</style>
+
+		指定个别元素不插入
+			<style type='text/css'>
+				h2.sample:before{
+					content:none;
+				}
+			</style>
+			<h2 class='sample'>不插入</h2>
 	2.插入图像文件
-	3.使用content属性
+		在标题前插入图像文件：插入图像时，需要使用url属性值来指定图像文件的路径
+			h2:before{
+				content:url(mark.png);
+			}
+		将alt属性的值作为图像的标题来显示
+			如果在content属性中通过"attr(属性名)"这种形式来指定attr属性值，可以将某个属性的属性值显示出来。
+			例如：
+			 	<style type="text/css">
+			 		img:after
+			 		{
+			 			content:attr(alt);
+			 			display:block;
+			 			text-align:center;
+			 			margin-top:5px
+			 		}
+			 	</style>
+			 	<p><img src='sky.jpg' alt="蓝天白云"/></p>
+	3.使用content属性来插入项目编号
+		a.在content属性中使用counter属性来针对对多个项目追加连续编号，使用犯法如下：
+			<元素>:before{
+				countent:counter(计数器名);
+			}
+			使用计数器来计算编号，计数器可以任意命名。
+			另外，还需要在元素的样式中追加对元素的counter-increment属性的指定，为了使用连续的编号，需要将counter-increment属性的属性值设置为before选择器或者after选择器的counter属性值中所指定的计数器名。代码如下：
+			<元素>
+			{
+				counter-increment:before选择器或者after选择器中指定的计数器名称。
+			}
+
+				<stype type='text/css'>
+				h1:before{
+					content:counter(mycounter);
+				}
+				h1
+				{
+					counter-increment:mycounter;
+				}
+				</style>
+
+				<h1>大标题</h1>
+				<p>实例文字</p>
+				<h1>大标题</h1>
+				<p>实例文字</p>
+				<h1>大标题</h1>
+				<p>实例文字</p>
+		b.在项目编号中追加文字
+			h1:before{
+				counter:'第'counter(mycounter)'章';
+			}
+		c.指定编号的样式
+			h1:before{
+				counter:'第'counter(mycounter)'章';
+				color:blue;
+				font-size:42px;
+			}
+		d.指定编号的类型
+			用before选择器或者after选择器的content属性，不仅可以追加数字编号。还可以追加字母编号或者罗马数字编号，例如
+			content:counter(计数器名，编号种类)
+
+			h1:before{
+				counter:'第'counter(mycounter,upper-alpha)'章';
+				color:blue;
+				font-size:42px;
+			}
+		e.编号嵌套
+			可以在大编号中嵌套中编号，在中编号中嵌套小编号。
+			<style type="text/css">
+				h1:before{
+					content:counter(mycounter)'.';
+				}
+				h1{
+					counter-increment:mycounter;
+					/*将大标题中使用counter-reset属性将中编号进行重置*/
+					counter-reset:subcounter;
+				}
+				h2:before{
+					content:counter(subcounter)'.';
+				}
+				h2{
+					counter-increment:subcounter;
+					margin-left:40px;
+				}
+				
+			<style>
+				<h1>大标题</h1>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h1>大标题</h1>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+			<h2>中标题</h2>
+
+		f.中编号中嵌入大编号
+			h2:before{
+					content:counter(mycounter)'-'counter(subcounter)'.';
+				}
+		g.在字符串两边添加嵌套文字符号
+			可以使用content属性的open-quote属性值与close-quote属性值在字符串两边添加如括号、单引号、双引号之类的嵌套文字符号。
+			在元素的quotes属性来指定使用什么嵌套文字符号。
+			<style type='text/css'>
+				h1:before{
+					content:open-quote;
+				}
+				h1:after{
+					content:close-quote;
+				}
+				h1{
+					quotes:"(" ")"
+				}
+			</style>
+			<h1>标题</h1>
+文字与字体相关样式
+	1.给文字添加阴影--text-shadow属性
+		1.1使用方法
+			text-shadow:length length length color
+			前面三个length分别指阴影离开文字的横方向距离，阴影离开文字的纵方向距离和阴影的模糊半径，color指的是阴影的颜色。
+			例如：
+				<stype type="text/css">
+					div{
+						text-shadow:5px 5px 5px gray;
+						color:navy;
+						font-size:50px;
+						font-weight:bold;
+						font-family:宋体；
+					}
+				<style>
+
+				<div>你好</div>
+		1.2指定多个阴影
+			指定多个阴影时使用逗号将多个阴影进行分割。
+			<stype type="text/css">
+					div{
+						text-shadow:10px 10px #f39800,
+									40px 35px #fff100,
+									70px 60px #c0ff00;
+						color:navy;
+						font-size:50px;
+						font-weight:bold;
+						font-family:宋体；
+					}
+				<style>
+
+				<div>你好</div>
+	2.让文本自动换行----word-break属性
+		在css3中，使用word-break属性来让文字自动换行。不仅仅可以让浏览器实现半角空格或链子符和面的换行，而且可以让浏览器实现任意位置的换行，使用方法如下：
+			<style type='text/css'>
+				div{
+					word-break:keep-all;
+				}
+			</style>
+		word-break属性值：
+		值									换行规则
+		normal								使用浏览器默认换行规则
+		keep-all							只能在半角空格或连字符处换行
+		break-all							允许在单词内换行
+	3.让长单词与URL地址自动换行--word-wrap属性
+		使用方法如下：
+			div{
+				word-wrap:break-word;
+			}
+			word-wrap属性可以使用的属性值为normal和beak-word两个：
+				normal:使用浏览器保持默认处理。
+				break-word:可以在长单词或URL地址内部进行换行。
+	4.使用服务端字体---Web Font与@font-face属性
+		在网页上显示服务器端字体
+			在css3中，可以使用@font-face属性来利用服务器端字体，@font-face的使用方法如下所示：
+				@font-face
+				{
+					font-family:WebFont;
+					src:url('font/Fontin_Sans_R_45b.oft') format('opentype');
+					font-weight:normal;
+				}
+
+				到目前为止可以使用的文件格式为OpenType格式和TrueType格式，使用OpenType格式时将format属性值设定为opentype,使用TrueType文件格式时将format属性设置为trutype.OpenType的文件扩展名为".otf",TrueType文件扩展名为".ttf"
+		显示客户端本地的字体
+			@font-face属性不仅可以用于显示服务端的字体，也可以用来显示客户端本地的字体。
+			使用@font-face属性显示客户端本地的字体时，需要将字体文本路径的URL属性值修改为"local()"形式的属性值，并且在"local"后面的括号中写入使用的字体。
+				例如：
+					<style type="text/css">
+						@font-face{
+							font-family:Arial;
+							src:local("Arial");
+						}	
+					</style>
+		属性指的指定
+			在@font-face属性中，可以指定的属性值如表15-2所示。
+
+			属性值 					说明					取值范围
+			font-family			设置字体系列的名称
+			----------------------------------------------------
+														notmal:不使用斜体
+														italic:使用斜体
+			font-style			设置字体的样式			inherit:从父元素继承
+														oblique:使用倾斜体
+			-------------------------------------------------------------
+														normal:使用浏览器的默认值
+			font-variant		设置字体的大小写			samll-caps:使用小型大写字母
+														inherit:从父元素元素继承
+			--------------------------------------------------------------
+														normal:使用浏览器的默认值
+														bold:使用粗体字符
+			font-weight			设置字体的粗细			bolder：使用更粗字符
+														lighter:使用更细字符
+														100-900：从细到粗定义字符，使用的值必须为100的整数倍，其中400等同于nornmal，700等同于bold
+			--------------------------------------------------------------
+														normal:默认值，把伸缩比例设置为标准
+														wider：把伸展比例设置为更进一步的伸展值
+														narrowwe:把收缩比例设置为更进一步的收缩值
+														ultra-condensed
+														extra-condensed
+														condensed
+														semi-condensed
+														semi-expanded
+			font-stretch		设置字体是否伸缩变形		expanded
+														extra-expanded
+														ultra-expanded:
+														设置字体的缩放比例
+														'ultra-condensed'是最宽的值，
+														'ultra-expanded'是最窄的值
+			---------------------------------------------------------------------
+			font-size			设置字体大小
+			---------------------------------------------------------------------
+			src 				设置字体文件的路径
+			---------------------------------------------------------------------
+
+	5.修改字体种类而保持字体尺寸不变--font-size-adjust属性
+
+		如果改了字体的种类，则页面的中所有使用改字体的文字大小都有可能发生变化，从而使得原来安排好的页面布局产生混乱。可以使用font-size-adjust属性达到修改字体种类二保持文字大小不会发生变化。
+		font-size-adjust属性需要使用每个字体中类自带的一个aspect值（比例值），使用方法如下：
+			div{
+				font-size:16px;
+				font-family:Times New Roman;
+				font-size-adjust:0.46;
+			}
+
+		在font-size-adjust属性中指定aspect值并且将字体修改为其他字体后，浏览区对于修改后的字体尺寸计算公式如下所示：
+			c = ( a / b ) s
+			其中，a表示实际使用的字体的aspect值，表示修改前字体的aspect值，s表示指定的字体尺寸，c为浏览器实际显示时的字体尺寸。
 
 其他：
 	去掉li前面的点
