@@ -510,11 +510,140 @@
 				font-family:Times New Roman;
 				font-size-adjust:0.46;
 			}
+盒相关样式
+	1.盒的类型
+		1.1基本类型
+			在css中的盒分为block类型和inline类型。例如：div元素与p元素属于block类型，span与a元素属于inline类型。每一行中只允许容纳一个block类型的元素，inline类型的元素宽度等于其内容的宽度。每行可以容纳多个inline元素。
+		1.2 inline-block类型
+			inline-block类型盒属于block类型盒的一种，但是在显示时它具有inline类型盒的特点。
+			width属性和height属性分别用来指定元素的宽度与高度，它只能使用在block类型的元素上。
+			默认情况下使用inline-block类型时并列显示的元素的垂直对齐方式是底部对其，为了将垂直对齐方式改为顶部对齐，还要在div元素的样式中假如vertical-align
+			1.2.1使用inline-block类型来显示水平菜单
+				<style type='text/css'>
+					ul{
+						margin:0;
+						padding:0;
+					}
+					li{
+						display:inline-block;
+						width:10px;
+						padding:10px 0;
+						background-color:#00ccff;
+						border:solid 1px #666666;
+						text-align:center;
+					}
+					a{
+						color:#000000;
+						text-decoration:none;
+					}
+				</style>
+		1.3使用inline-table类型
+			table{
+				display:inline-table;
+				border:solid 3px #00aaff;
+				vertical-algin:bottom;
+			}
+		1.4 list-item类型
+			如果在display属性中将元素的类型设定为list-item类型，可以将多个元素作为列表来显示，同时在元素的开头加上列表的标记。
+			例如：使用display属性将这些div元素的类型设定为list-item类型，使用list-style-type属性将列表标记为circle，最终显示页面中的div元素以列表形式呈现。
+			<style type='text/css'>
+				div{
+					display:list-item;
+					list-style-type:circle;
+					margin-left:30px;
+				}
+			</style>
+			<div>示例div1</div>
+			<div>示例div2</div>
+			<div>示例div3</div>
+			<div>示例div4</div>
+		1.5 run-in类型与compact类型
+			将元素指定为run-in类型或者compact类型的时候，如果元素后面还有block类型的元素，run-in类型的元素将被包含在block类型元素的内部，而compact类型的元素将被放置在block类型的元素左面。
+			<style type='text/css'>
+				dl#runin dt{
+					display:run-in;
+					border:solid 2px red;
+				}
+				dl#compact dt{
+					display:compact;
+					border:solid 2px red;
+				}
+				dd{
+					margin-left:100px;
+					background-color:yellow;
+				}
+			</style>
 
-		在font-size-adjust属性中指定aspect值并且将字体修改为其他字体后，浏览区对于修改后的字体尺寸计算公式如下所示：
-			c = ( a / b ) s
-			其中，a表示实际使用的字体的aspect值，表示修改前字体的aspect值，s表示指定的字体尺寸，c为浏览器实际显示时的字体尺寸。
+			<dl id="runin">
+			<dt>名词一</dt>
+			<dd>关于"名词一"的名词解释</dd>
+			</dl>
 
+			<dl id="compact">
+			<dt>名词二</dt>
+			<dd>关于"名词二"的名词解释</dd>
+			</dl>
+		1.6表格相关类型
+			在CSS3中所有表格相关的元素及其所有属性类型如表16-1所示。
+			元素			所属类型					说明
+			table 		table 				代表整个表格
+			table 		inline-table 		代表整个表格，可以被指定为table类型，也可以被指定为inlne-table类型
+			tr 			table-row			代表表格中的一行
+			td 			table-cell      	代表表格中的单元格
+			th   		table-cell 			代表表格中的列标题
+			tbody 		table-row-group 	代表表格中的所有行
+			thead 		table-header-group 	代表表格中的表头部分
+			tfoot 		table-footer-group	代表表格中的脚注部分
+			col 		table-column		代表表格中的一列
+			colgroup 	table-column-group 	代表表格中的所有列
+			caption		table-capton 		代表整个表格的标题
+
+			例如：
+			<style type='text/css'>
+				.table
+				{
+					display:table;
+					border:solid 3px #00aaff;
+				}
+				.caption{
+					display:table-caption;
+					text-algin:center;
+				}
+				.tr{
+					display:table-row;
+				}
+				.td{
+					display:table-cell;
+					border:solid 2px #aaff00;
+					padding:10px;
+				}
+				.thead{
+					display:table-header-group;
+					background-color:#ffffaa;
+				}
+			</style>
+
+			<div class ='table'>
+				<div class='caption'>字母表</div>
+				<div class='thead'>
+					<div class='tr'>
+						<div class='td'>1st</div>
+						<div class='td'>1st</div>
+						<div class='td'>1st</div>
+						<div class='td'>1st</div>
+						<div class='td'>1st</div>
+					</div>
+					<div class='tr'>
+						<div class='td'>A</div>
+						<div class='td'>B</div>
+						<div class='td'>C</div>
+						<div class='td'>D</div>
+						<div class='td'>E</div>
+					</div>
+				</div>
+			</div>
+	1.7 none类型
+		将元素类型指定为none类型后，该元素将不会被显示。
 其他：
 	去掉li前面的点
 		li{
