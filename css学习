@@ -642,8 +642,255 @@
 					</div>
 				</div>
 			</div>
-	1.7 none类型
-		将元素类型指定为none类型后，该元素将不会被显示。
+		1.7 none类型
+			将元素类型指定为none类型后，该元素将不会被显示。
+	2.对于盒中容纳不下的内容的显示
+		2.1、overflow属性
+			可以使用overflow属性来指定对于盒中容纳不下的内容的显示方法。
+			
+			如果在div元素的样式代码中假如overflow属性，并且将属性值设置为hidden，超出容纳范围的文字将被隐藏起来。div元素修改后的样式代码如下所示。
+			<style type="text/css">
+				div{
+					overflow:hidden;
+					width:300px;
+					height:150px;
+					border:solid 1px red;
+				}
+			</style>
+
+			如果将overflow属性的属性值设定为scroll,则div元素中出现的固定水平的滚动条与垂直滚动条，文字超出div元素的容纳范围时将滚动显示。div元素修改后的样式代码如下所示：
+				<style type="text/css">
+					div{
+						overflow:overflow;
+						width:300px;
+						height:150px;
+						border:solid 1px red;
+					}
+				</style>
+
+			如果将overflow属性的属性值设定为auto，则当文字超出div元素的容纳范围时根据需要出现水平滚动条和垂直滚动条，并且滚动显示超出容纳噶范围的内容：
+				<style type="text/css">
+					div{
+						overflow:auto;
+						width:300px;
+						height:150px;
+						border:solid 1px red;
+					}
+				</style>
+
+			如果将overflow属性的属性值设定为visible，则效果与不使用overflow属性时一样，超出容纳范围的文字依原样显示：
+				<style type="text/css">
+					div{
+						overflow:visible;
+						width:300px;
+						height:150px;
+						border:solid 1px red;
+					}
+				</style>
+		2.2、overflow-x属性和overflow-y属性
+			可以指定在水平方向上或者垂直方向上内容超出盒的容纳范围时的显示方法；
+
+		2.3、text-overfloe属性
+			当通过overflow属性的属性值设定为"hidden"的方法，将盒中容纳不下的内容隐藏起来时，如果使用text-overflow属性，可以在盒的末尾显示一个代表省略的符号'...'.。但是，text-overflow属性只在当盒中的内容在水平方向上超出盒的容纳范围时有效。
+			通过将white-space属性设置为nowrap，使得盒右端的内容不能换行显示，这样一来，盒中的内容就在水平方向上溢出了。指定overflow属性的属性值为'hidden'，超出div元素的不分文字将会被隐藏起来。使用text-overflow属性，并且将属性值设定为'ellipsis'，则会在div元素末尾出现一个省略号。注意，在IE中书写成text_overflow,在safari中书写成-webkit-text-overflow,在Opera中书写成"-o-text-overflow",代码清单如下：
+				<style type="text/css">
+					div{
+						overflow:hidden;
+						text-overflow:ellipsis;
+						-webkit-text-overflow:ellipsis;
+						-o-text-overflow:ellipsis;
+						white-space:nowrap;
+						width:300px;
+						border:solid 1px orange;
+					}
+				<style>
+	3、对盒使用阴影
+		3.1、box-shadow属性的使用方法
+			可以使用box-shadow属性让盒在显示时产生阴影效果。safari写成'-webkit-boc=shadow'形式，firefox写成"-moz-box-shadow"的形式。语法规则如下：
+				box-shadow:length length length color
+			其中,前面三个length分别指阴影离开文字的横向距离，阴影离开文字的纵向距离和阴影的模糊半径，color阴影的颜色。
+				例如：
+				div{
+					background-color: #ffaa00;
+					box-shadow: 10px 10px 10px gray;
+					width: 200px;
+					height: 100px;
+				}
+		3.2、将参数设置为0
+			把阴影的模糊半径设定为0时，将绘制不向外模糊的阴影。
+			将阴影离开文字的横向距离与阴影离开文字的纵向距离均设置为0时，将在盒的周围绘制阴影。
+		3.3、对盒内元素使用阴影
+			可以单独对盒子内的子元素使用阴影。例如
+				<style type='text/css'>
+					span{
+						background-color:#ffaa00;
+						box-shadow:10px 10px 10px gray;
+					}
+				</style>
+				<div>
+					示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字
+					<span>示例文字示例文字示例文字示例文字示例文字示例文字示例文字</span>
+					示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字
+				</div>
+		3.4、对第一个文字或第一行使用阴影
+			可以使用first-letter选择器或first-line选择器来让第一行具有阴影效果。
+			<style type='text/css'>
+				div:first-letter{
+					font-size:22px;
+					float:left;
+					background-color:#ffaa00;
+					box-shadow:5px 5px 5xp gray;
+				}
+			</style>
+			<div>示例文字</div>
+		3.5、对表格及单元格使用阴影
+			可以使用box-shadow属性让表格及表格内的单元格产生阴影效果。
+			<style type='text/css'>
+				table{
+					border-spacing:10px;
+					box-shadow:5px 5px 20px gray;
+				}
+				td{
+					background-color:#ffaa00;
+					border-spacing:10px;
+					box-shadow:5px 5px 5px gray;
+					padding:10px;
+				}
+			</style>
+
+			<table>
+				<tr>
+					<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
+				</tr>
+				<tr>
+					<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
+				</tr>
+			</table>
+	4、指定针对元素的宽度与高度的计算方法
+		4.1、box-sizing属性
+			使用box-sizing属性，可以指定用width属性与height属性分别指定宽度值和高度值是否包含元素内部的补白区域以及边框的宽度与高度。
+			可以给box-sizing属性指定的属性值为content-box属性值与border-box属性值。cotent-box属性值表示元素的宽度与高度不包括内部补白区域，以及边框的高度与宽度。border-box属性值表示元素的宽度与高度包括内部补白区域以及边框的宽度与高度。
+			例如：
+			<style type='text/css'>
+				div{
+					width: 300px;
+					border: solid 30px #ffaa00;
+					padding: 30px;
+					background-color: #ffff00;
+					margin: 20px auto;
+				}
+				div#div1
+				{
+					box-sizing: content-box;
+				}
+				div#div2{
+					box-sizing: border-box;
+				}
+			</style>
+			<div id=div1>
+				示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字
+			</div>
+			<div id=div2>
+				示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字
+			</div>
+		4.2、为什么要使用box-sizing属性
+			使用box-sizing属性的目的是控制元素的总宽度，如果不使用该属性，样式中默认使用的是xontent-box属性值，他只对内容的宽度做了一个指定，却没有对元素的总宽度进行指定。有些场合下利用border-box属性值会使页面布局更加方便。例如如下代码，只要将两个div元素的border-box属性值都设定为50%，就可以确保两个div元素的并列显示
+			<stype type='text/css'>
+				div{
+					width:50%;
+					border:solid 30px #ffaa00;
+					padding:30px;
+					background-color:#ffff00;
+					float:left;
+					box-sizing:border-box;
+				}
+				div#div2{
+					border:solid 30px #00ffff;
+				}
+			</style>
+			<body>
+				<div id='div1'>
+					示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字
+				</div>
+				<div id='div2'>
+					示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字
+				</div>
+			</body>
+	5.与北京个边框相关的样式
+		5.1、于北京相关的属性
+				属性 							功能
+			background-clip					指定背景的显示范围
+			background-origin				指定绘制背景图像时的起点
+			background-size					指定背静中图像的尺寸
+			background-break				指定内联元素的背景图像进行平铺时的循环方式
+
+			5.1.1、指定背景的显示范围----background-clip属性
+				一个具有背景的元素通常由元素的内容，内部补白（padding），边框，外部补白（margin）构成。
+				背景的显示范围是指包括边框在内的范围。在Css3中，可以使用background-clip来修改背景的显示范围，如果将background-clip的属性值设定为border,则背景范围包括边框区域，如果设定为padding,则不包括边框区域。
+				<style type='text/css'>
+					div{
+						background-color: black;
+						border: dashed 30px green;
+						padding: 30px;
+						color: white;
+						font-size: 30px;
+						font-weight: bold;
+						z-index: 9999;
+					}	
+					div.div1{
+						background-clip: border-box;
+						-webkit-background-clip: border-box;
+					}
+					div.div2{
+						background-clip: padding-box
+					}
+				</style>
+
+				<div clas='div1'>
+					示例文字
+				</div>
+				<hr>
+				<div class='div2'>
+					示例文字
+				</div>
+			5.1.2、指定绘制北京图像的绘制起点
+				在绘制背景图像时，默认是从内部补白区域的左上角开始，但是可以利用background-origin属性来指定绘制时从边框的左上角开始，或者从内容的左上角开始。
+					background-origin的属性值有boder，padding，content。分别代表从边框的左上角，内部补白区域的左上角或内容的左上角开始绘制。
+				例如：
+					<style type='text/css'>
+						div{
+							background-color: black;
+							background-image: url(img/shoe.png);
+							background-repeat: no-repeat;
+							border: dashed 30px green;
+							padding: 30px;
+							color: white;
+							font-size: 2em;
+							font-weight: bold;
+						}
+						div.div1{
+							background-origin: border-box;
+						}
+						div.div2{
+							background-origin: padding-box;
+						}
+						div.div3{
+							background-origin: content-box;
+						}						
+					</style>
+
+					<div class='div1'>
+						示例文字
+					</div>
+					<hr>
+					<div class='div2'>
+						示例文字
+					</div>
+					<hr>
+					<div class='div3'>
+						示例文字
+					</div>
+
 其他：
 	去掉li前面的点
 		li{
