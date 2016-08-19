@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+	<script type="text/javascript" src="js/jquery-2.0.2.js" ></script>
+	<style type="text/css">
+		#my_canvas{
+			width: 90%;
+			height: 400px;
+			border: solid 1px #98FB98;
+			margin: 5%;
+			box-sizing: border-box;
+			
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<div class="my_div">
+		<canvas id='my_canvas'></canvas>
+	</div>
+</body>
+<script>
+	var canvas = document.getElementById("my_canvas");
+	var SPACING = 5;
+	var BASE_HEIGHT=100;
+	var BASE_LEFT=100;
+	var ctx = null;
+	var sort_array = [21,11,14,36,7,3,9,23,18,30,10,28,25,40,2];
+	var process_array=[];
+	var animate_interval = '';
+	Array.prototype.clone=function(){
+		var a=[]; 
+		for(var i=0,l=this.length;i<l;i++) 
+			a.push(this[i]); 
+		return a; 
+	}
+	init();
+	InsertSort(sort_array);
+	console.log(process_array);
+	animate();
+	//drawArray(sort_array);
+	//reset();
+	function init(){
+		try{
+			ctx = canvas.getContext("2d");
+		}catch(e)
+		{
+			alert("初始化失败");
+		}
+		ctx.lineWidth=1;
+		//ctx.fillStyle='rgb(255,0,0)';
+		ctx.strokeStyle = "rgb("+(Math.floor(Math.random()*255))+","+(Math.floor(Math.random()*255))+","+(Math.floor(Math.random()*255))+")";
+		drawArray(sort_array);
+	}
+	
+	function drawLine(index,heigth)
+	{
+		ctx.beginPath();
+		ctx.moveTo(index * SPACING+BASE_LEFT,BASE_HEIGHT);
+		ctx.lineTo(index * SPACING+BASE_LEFT,BASE_HEIGHT-heigth);
+		ctx.stroke();
+	}
+	
+	function drawArray(base_array)
+	{
+		var length = base_array.length;
+		for(var i=0;i<length;i++)
+		{
+			drawLine(i,base_array[i]);
+		}
+	}
+	
+	function reset()
+	{
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+	}
+	
+	function InsertSort(a)
+	{
+		var len = a.length;
+		var temp = [];
+		for (var i=1;i<len;i++)
+		{
+			if(a[i] < a[i-1])
+			{
+				j=i-1;
+				x=a[i];
+				a[i]=a[i-1];
+				while (j >= 0 && x < a[j])
+				{
+					a[j+1]=a[j];
+					j--;
+				}
+				a[j+1]=x;
+			}
+			
+			//reset();
+			//drawArray(a);
+			process_array.push(a.clone());
+			
+		}
+	}
+	
+	function animate()
+	{
+		process_array.reverse();
+		animate_interval  = setInterval(function(){
+			var arr = process_array.pop();
+			if(!arr){
+				window.clearInterval(animate_interval);
+				
+			}else{
+				reset();
+				drawArray(arr);
+			}
+			
+		},100);
+	}
+	
+</script>
+</html>
