@@ -40,9 +40,13 @@
 		return a; 
 	}
 	init();
-	InsertSort(sort_array);
-	console.log(process_array);
-	animate();
+	//插入排序
+	//InsertSort(sort_array);
+	
+	//选择排序
+	selectSort(sort_array);
+
+animate();
 	//drawArray(sort_array);
 	//reset();
 	function init(){
@@ -52,7 +56,7 @@
 		{
 			alert("初始化失败");
 		}
-		ctx.lineWidth=1;
+		ctx.lineWidth=2;
 		//ctx.fillStyle='rgb(255,0,0)';
 		ctx.strokeStyle = "rgb("+(Math.floor(Math.random()*255))+","+(Math.floor(Math.random()*255))+","+(Math.floor(Math.random()*255))+")";
 		drawArray(sort_array);
@@ -79,6 +83,37 @@
 	{
 		ctx.clearRect(0,0,canvas.width,canvas.height);
 	}
+	
+	function selectMinKey(a,i)
+	{
+		len = a.length;
+		var k = i;
+		for (var j=k;j<len;j++)
+		{
+			if(a[k] > a[j])
+				k = j;
+		}
+		return k;
+	}
+	
+	function selectSort(a)
+	{
+		var key=0;
+		var tmp=0;
+		var len = a.length;
+		for(var index=0;index<len;index++){
+			key = selectMinKey(a, index);
+			if(key!==index){
+				tmp = a[index];
+				a[index] = a[key];
+				a[key] = tmp;
+			}
+			process_array.push(a.clone());
+			//print_arr($a, $index);
+		}
+		
+	}
+	
 	
 	function InsertSort(a)
 	{
