@@ -890,8 +890,692 @@
 					<div class='div3'>
 						示例文字
 					</div>
+		5.1.3、指定背景图像的尺寸 ---- background-size属性
+			使用background-size属性来指定背景图像的尺寸。例如：
+				<style type="text/css">
+					div{
+						background-color: black;
+						background-image: url(img/main.jpg);
+						padding: 30px;
+						font-size: 2em;
+						font-weight: bold;
+						background-size: 100px 20px;
+						
+					}
+				</style>
 
-其他：
+				<div>
+					实例文字
+				</div>
+			如果要维持图像横纵比的话，可以在设定图像宽度与高度的同时，将另一个参数设定为"auto",例如，将图像高度设定为20像素，宽度设定为auto。
+				<style type="text/css">
+					div{
+						background-color: black;
+						background-image: url(img/main.jpg);
+						padding: 30px;
+						font-size: 2em;
+						font-weight: bold;
+						background-size: auto 20px;
+						
+					}
+				</style>
+
+				<div>
+					实例文字
+				</div>
+			在使用background-size属性的时候，可以将宽度与高度中的一个参数省略，只指定一个参数。在这种情况下，宽度使用这个值，高度使用auto参数。
+		5.1.4、指定内联元素北京图像进行平铺时的循环方式---background-break属性
+			可以指定bounding-box、each-box和continuous这三种循环方式。
+
+			将background-break属性指定为bounding-box的时候，背景图像在整个内联元素中进行平铺，指定为each-box的时候，背景图像在每一行中进行平铺，指定continuous的时候，下一行中的图像紧接着上一行中的图像继续平铺。
+
+			只有firfox得到支持。
+	5.2、在一个元素中显示多个背景图像
+		例如：
+		<style type="text/css">
+			
+			div{
+				background-image: url(img/shoe.png),url(img/shoe.png),url(img/shoe12.png);
+				background-repeat: no-repeat,repeat-y,no-repeat;
+				background-position: left bottom,center center,right top;
+				/*background-position: 20% 30%,center center,right top;*/
+				padding: 90px 0px;
+			}
+		</style>
+		<div></div>
+
+		允许多重指定并配合着多个图像文件一起利用的属性有：
+			background-image
+			background-repeat
+			background-position
+			background-clip
+			background-origin
+			background-size
+	5.3、使用图像边框
+		5.3.1、border-image属性
+			使用方法：
+			border-image:url(图像文件的路径) A B C D
+
+			属性值中至少必须指定五个参数，其中第一个参数为边框所使用的图像文件的路径，A,B,C,D四个参数便是当浏览器自动吧边框所使用到的图像进行分隔时的上边距、右边距、下边距及左边距。
+
+			|-----------------------|
+			|			⬇️A			|
+			|D					   B|
+			|➡️➡️					  ⬅️|
+			|						|
+			|						|
+			|			⬆️C			|
+			|-----------------------|
+
+			图像被分为9个不分分别为
+			border-top-left-image   border-top-image 	border-top-right-image
+			border-left-image 								border-right-image
+			border-bottom-left-image 	border-bottom-image 	border-bottom-right-image
+
+			具体显示的时候border-top-left-image、border-top-left-image、border-bottom-right-image、border-bottom-right-image这四部分是没有任何展示效果的，不会平铺，不会重复也不会拉伸。
+
+			对于border-top-image、border-left-image、border-bottom-image、border-right-image浏览器分别作为上边框使用图片，左边框使用图片，下边框使用图片，右边框使用图片。必要时可以将这四部分进行平铺或拉伸。
+
+
+			例如：
+			<style type="text/css">
+		
+				div{
+					border: solid 5px;
+					border-image: url(img/shoe.png) 10 10 10 10 ;
+					width: 300px;
+				}
+			</style>
+			<div class="my_div">
+				实例文字
+			</div>
+
+		5.3.3、使用border-image来指定边框宽度
+			方法如下：
+				border-image:url(图像文件的路径) A、B、C、D/border-width
+		5.3.4、中央图像的自动拉伸
+			border-top-image、border-left-image、border-bottom-image、border-right-image这四部分自动分配为四条边所用的图像之外，讲位于中间的不分图像分配给元素边框所包围的中间区域。
+		5.3.5指定四条边中图像的显示方法
+			指定方法如下：
+				border-image:url(文件路径) A、B、C、D/border-width topbottom leftright
+
+				topbottom表示元素的上下两条边中图像的显示方法，leftright表示元素的左右两条边的显示方法。在现实方法中可以指定为repeat、stretch与round三种。
+
+				*repeat:图像将以平铺的方式进行显示。
+				*stretch:图像将以拉伸的方式进行显示；
+				*round:与repeat相似，区别在于如果最后显示的不分不到图像的一半，就不显示最后的图像，然后扩大前面的图像，使显示区域正好完整平铺全部图像；如果能够显示的部分超过图像的一半，进显示最后的图像，但是将全部显示的图像缩小，是显示区域正好完整平铺全部图像。
+	6.css3中的变形处理
+		6.1、transform功能的基础知识
+			transform的功能
+			*：缩放：
+				使用scale方法实现文字或图像的缩放处理。格式：
+					transform:scale(水平放大倍率，垂直放大倍率);
+
+			*：倾斜：
+				使用skew方法来实现文字或图像的倾斜处理。格式：
+					transform:skew(水平倾斜角度，垂直倾斜角度);
+
+			*：移动
+				使用translate方法来将文字或者图像进行移动。格式：
+					transform:translate(水平方向上移动距离，垂直方向上移动距离);
+		6.2、对一个元素使用多种变形的方法
+			6.2.1、变形示例
+				<style type="text/css">
+		
+					div{
+						width: 300px;
+						background-color: yellow;
+						text-align: center;
+						transform: translate(150px,200px) rotate(45deg) scale(0.5) skew(30deg);
+					}
+				</style>
+				<div>
+					实例文字实例文字实例文字实例文字实例文字实例文字实例文字实例文字实例文字实例文字实例文字实例文字
+				</div>
+			6.2.2、指定变形的基准点
+				在使用transform方法进行文字或图像的变形时，是以元素的中心点为基准点进行的。使用transform-origin属性，可以改变变形的基准点。
+					<style type="text/css">
+		
+						div{
+							width: 200px;
+							height: 200px;
+							display: inline-block;
+						}
+						div#a{
+							background-color: pink;
+						}
+						div#b{
+							background-color: green;
+							transform: rotate(45deg);
+							transform-origin: left bottom; 
+						}
+					</style>
+					<div id=a>
+					</div>
+					<div id=b>
+					</div>
+				指定transform-origin属性值的时候，采用"基准点在元素的水平方向上的位置，基准点在垂直防线的位置"的方法，其中"基准点在元素的水平方向上的位置"中可以指定的值为left,center,right,"基准点在元素的垂直方向上的位置"只能够可以指定的值为top、center、bottom。
+	7.css3中的动画功能
+		css3中的动画功能分为transitions功能和animations功能，这两种功能都可以通过改变css中的属性值来产生动画效果。
+
+		到目前为止，tansitions功能支持从一个属性值平滑过渡到另一个属性值，animations功能支持通过关键帧的指定来在页面上产生更复杂的动画效果。
+		7.1、transitions功能
+			在css3中，tansitins功能通过将元素的某个属性从一个属性值在指定的时间内平滑过渡到另一个属性值来实现动画效果。
+			transition：property duration timing-function
+			其中property表示对那个属性进行平滑过渡，duration表示在多长时间内完成属性值的平滑过渡，timing-function表示通过什么方法来进行平滑过渡。
+				例如：
+					<style type="text/css">
+						div{
+							background-color: #ADFF2F;
+							transition: background-color 1s linear;
+						}
+						div:hover{
+							background-color: red;	
+						}
+					</style>
+					<div id=a>
+							示例文字
+					</div>
+			7.1.1、使用tansitions功能同时平滑过渡多个属性值
+				div{
+					background-color: #ADFF2F;
+					color:#000000;
+					width: 300px;
+					transition: background-color 1s linear,color 1s linear,width 1s linear;
+				}
+				div:hover{
+					background-color: red;	
+					color:#ffffff;
+					width: 400px;
+				}
+		7.2、Animations功能
+			7.2.1、使用方法
+				@keyframes 关键帧集合名{创建关键帧的代码}
+				@-webkit-keyframes 关键帧集合名{创建关键帧的代码}
+				@-ms-keyframes 关键帧集合名{创建关键帧的代码}
+				创建关键帧的代码类似如下：
+					40%{
+						本关键帧的样式代码
+					}
+				"40%"表示改帧位于整个动画过程中的40%处，开始帧为0%，结束帧为200%。
+				例如：
+					<style type="text/css">
+						div{
+							position: absolute;
+							background-color: yellow;
+							top: 100px;
+							width: 500px;
+						}
+						@keyframes mycolor{
+							0%{
+								background-color: red;
+								transform: rotate(0deg);
+							}
+							40%{
+								background-color: darkblue;
+								transform: rotate(30deg);
+							}
+							70%{
+								background-color: yellow;
+								transform: rotate(-30deg);
+							}
+							100%{
+								background-color: red;
+								transform: rotate(0deg);
+							}
+						}
+						div:hover{
+							animation-name: mycolor;
+							animation-duration: 5s;
+							animation-timing-function: linear;
+						}
+					</style>
+
+					<div id=a>
+							示例文字
+					</div>
+	8.布局相关样式
+		8.1、多栏布局
+			8.1.1、使用float属性或positin属性的确定
+				<style type="text/css">
+					div{
+						width:20em;
+						float: left;
+					}
+					div#div1{
+						margin-right: 2em;
+					}
+					div#div3{
+						width: 100%;
+						background-color: yellow;
+						height: 200px;
+					}
+				</style>
+				<div id="div1">
+					<img src="img/shoe.png">
+					<p>
+						示例文字1，相对来说较长的文字，示例文字。示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字
+					</p>
+				</div>
+				<div id="div2">
+					<p>
+						示例文字2，相对来说较长的文字，示例文字。示例文字2，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字
+					</p>
+				</div>
+				<div id="div3">
+					页面中其他内容
+				</div>
+				div元素与div元素是各自独立的，如果在第一个div中加入一些内容的话，将会使得两个元素的底部不能对齐，导致页面多出一块空白区域。
+		8.1.2、使用多栏布局方式
+			<style type="text/css">
+				div#div1{
+					width: 40em;
+					column-count: 2;
+					-webkit-column-count: 2;
+				}
+				div#div3{
+					width: 100%;
+					background-color: yellow;
+					height: 200px;
+				}
+			</style>
+
+			<div id="div1">
+				<img src="img/shoe.png">
+				<p>
+					示例文字1，相对来说较长的文字，示例文字。示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字
+				</p>
+				<p>
+					示例文字2，相对来说较长的文字，示例文字。示例文字2，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字示例文字1，相对来说较长的文字，示例文字
+				</p>
+			</div>
+			<div id="div3">
+				页面中其他内容
+			</div>
+
+			在css3中，通过column-count属性来使用多栏布局方式，该属性的含义是将一个元素中的内容分为多栏进行显示。
+
+			使用column-width属性单独设置每一栏的宽度而不设置元素的宽度。
+
+			使用column-gap属性设置多栏之间的间隔距离。
+
+		8.2、盒布局
+			8.2.1、盒布局的基础知识
+			8.2.2、使用盒布局
+				在css3中，通过box来使用盒布局。
+				<style type="text/css">
+					#container{
+						display: -webkit-box;
+					}
+					#left-sidebar{
+						
+						width: 200px;
+						padding: 20px;
+						background-color: orange;
+					}
+					#contents{
+						
+						width: 300px;
+						padding: 20px;
+						background-color: yellow;
+					}
+					#right-sidebar{
+						
+						width: 200px;
+						padding: 20px;
+						background-color: limegreen;
+					}
+					#left-sidebar,#contents,#right-sidebar{
+						box-sizing: border-box;
+					}
+				</style>
+				<div id='container'>
+					<div id=left-sidebar>
+						<h2>左边边栏</h2>
+					
+						<ul>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+						</ul>
+					</div>
+					<div id=contents>
+						<h2>内容</h2>
+						<p>示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字示例文字</p>
+					</div>
+					<div id=left-sidebar>
+						<h2>右边边栏</h2>
+					
+						<ul>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							<li><a href="">超链接</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				一定注意去掉float: left;属性，否则出错
+				
+		8.3、弹性盒布局
+			8.3.1、使用自适应窗口的弹性盒布局
+				使用box-flex属性，使盒布局变为弹性盒布局。
+				#container{
+						display: -webkit-box;
+					}
+					#left-sidebar{
+						float: left;
+						width: 200px;
+						padding: 20px;
+						background-color: orange;
+					}
+					#contents{
+						float: left;
+						-webkit-box-flex:1;
+						padding: 20px;
+						background-color: yellow;
+					}
+					#right-sidebar{
+						float: left;
+						width: 200px;
+						padding: 20px;
+						background-color: limegreen;
+					}
+					#left-sidebar,#contents,#right-sidebar{
+						box-sizing: border-box;
+					}
+				将id=contents指定宽的的代码去掉，假如box-flex属性。
+			8.3.2、改变元素的显示顺序
+				使用弹性盒布局的时候，可以通过box-ordinal-group属性来改变各元素的显示顺序。
+			8.3.3、改变元素的排列方式
+				使用box-orient来指定多个元素的排列方式
+					#container{
+						display: -webkit-box;
+						-webkit-box-orient:vertical;
+					}
+			8.3.4、元素宽度与高度自适应
+				当元素排列方式被指定为垂直方向时，三个元素的高度为元素中的内容的高度，宽度自动变为容器的宽度。
+				虽然使用盒布局的时候，元素的高度与宽度具有一定程度的适应行，但是容器总还是会留出一大片空白的区域。
+			8.3.5、使用弹性盒布局来消除空白
+				元素样式中加入box-flex属性的元素的宽度与高度总会自动扩大，使得参与排列的元素的总高度与总高度始终等于容器元素的高度与宽度。
+
+			8.3.6、对多个元素使用box-flex属性
+				在css3中，可以对多个元素使用box-flex属性。
+
+			8.3.7、指定水平方向与垂直方向的对其方式
+				使用盒布局的时候，可以使用box-pack属性及box-align属性来指定元素文字，图像以及子元素的水平方向或者处置方向的对其方式。
+
+				属性及含义如下
+				---------------------------------------------------------------
+				属性值 		排列方式 		box-pack属性值含义 	box-align属性值含义
+				---------------------------------------------------------------
+				start 		horizontal 		左对齐				顶部对齐
+				---------------------------------------------------------------
+				center      horizontal 		中对齐				中部对齐
+				---------------------------------------------------------------
+				end 		horizontal 		右对齐 				底部对其
+				---------------------------------------------------------------
+				start		vertical 		顶部对其 				左对齐
+				---------------------------------------------------------------
+				center 		vertical 		中部对齐             中对齐
+				---------------------------------------------------------------
+				end 		vertical 		底部对其 				右对齐 	
+				---------------------------------------------------------------
+				#container{
+					display: -webkit-box;
+					-webkit-box-orient: horizontal;
+					-webkit-box-pack: start;
+					-webkit-box-align: start;
+				}
+	9.Media Queries相关样式
+		9.1、根据浏览器的窗口大小来选择使用不同的样式
+			<style type="text/css">
+					body{
+						margin: 20px 0px;	
+					}
+					#container{
+						width:740px;
+						float: left;
+					}
+					p{
+						line-height: 600px;
+						text-align: center;
+						font-weight: bold;
+						font-size: 2em;
+						margin: 0 0 20px 0;
+					}
+					#main{
+						width:520px;
+						float: right;
+						background-color: yellow;
+					}
+					#sub01{
+						width: 200px;
+						float: left;
+						background: orange;
+					}
+					#sub02{
+						width: 200px;
+						float: right;
+						background: green;
+					}
+					@media  screen and (min-width: 1000px) {
+						#container{
+							width:1000px;
+							float: left;
+						}
+						#wapper{
+							width:780px;
+							float: left;
+						}
+						#main{
+							width:560px;
+							float: right;
+						}
+						#sub01{
+							width: 200px;
+							float: left;
+						}
+						#sub02{
+							width: 200px;
+							float: right;
+						}
+					}
+					@media  screen and (min-width:640px ) and (max-width: 999px) {
+						#container{
+							width:640px;
+							float: left;
+						}
+						#wapper{
+							width:640px;
+							float: none;
+						}
+						p{
+							line-height: 400px;
+						}
+						#main{
+							width:420px;
+							float: right;
+						}
+						#sub01{
+							width: 200px;
+							float: left;
+						}
+						#sub02{
+							width: 100%;
+							float: none;
+							clear: both;
+							line-height: 150px;
+						}
+					}	
+					@media  screen and  (max-width: 639px) {
+						#container{
+							width:100%;
+						}
+						#wapper{
+							width:100%;
+							float: none;
+						}
+						body{
+							margin: 20px;
+						}
+						p{
+							line-height: 100px;
+						}
+						#main{
+							width:100%;
+							float: none;
+						}
+						#sub01{
+							width: 200px;
+							float: left;
+							line-height: 100px;
+						}
+						#sub02{
+							width: 100%;
+							float: none;
+							line-height: 100px;
+						}
+					}	
+				</style>
+
+			<div id=container>
+				<div id=wapper>
+					<p id=main>main</p>
+					<p id=sub01>sub 01</p>					
+				</div>
+				<p id=sub02>sub 02</p>
+				
+			</div>
+		9.2、使用方法
+			@media 设备类型 and (设备特性) {掩饰代码}
+
+			设备类型表
+			-----------------------------------------
+			可以指定的值 						设备类型
+			all 							所有设备
+			screen							电脑显示器
+			print 							打印用纸或打印预览试图
+			handheld 						便携设备
+			tv 								电视机类型设备
+			speech 							语音和音频合成器
+			braille 						盲人用点字法触觉回馈设备
+			embossed 						盲文打印机
+			projection 						各种投影设备
+			tty 							使用固定密度字母栅格的媒介
+
+			设备特性的说明
+			----------------------------------------------------------------------
+			特性 		可以指定的值 		是否允许使用max/min前缀 			 特性说明
+			width 		带单位的长度数值 				允许 			浏览器窗口的宽度
+			height 		带单位的长度数值              允许 			浏览器窗口的宽度
+			device-width 	带单位的长度数值          允许 			设备屏幕分辨率宽度值
+			device-height 	带单位的长度数值             允许 			设备屏幕分辨率高度值
+			orientation 	只能指定两个值portrait和landscape 不允许 	浏览器窗口的方向是纵向还是横向
+			aspect-ratio 	比例值 					允许 			浏览器窗口的纵横比
+			device-aspect-ratio 	比例值 			允许 			屏幕分辨率的纵横比
+			color 			整数值 					允许 			设备使用多少为的颜色值
+			color-index     整数值 					允许 			色彩表中的色彩数
+			monochrome 		整数值 					允许 			单色帧缓冲器中没像素的字节数
+			resolution 		分辨率值					允许 			设备分辨率
+			scan 			只能指定两个值，progressive或interlace 不允许 	电视机类设备的扫描方式。progressive：表示转行扫面，interlace表示隔行扫描
+			grid 			只能指定两个值，0或1     不允许 			设备基于栅格还是基于位图
+
+			可以在表达式中加上not关键字或者only关键字，not关键字表示对后面的表达式执行取反的操作。
+			only关键字让那些不支持Media Queries但是能够读取Media Type的设备浏览器将表达式中的样式隐藏起来。
+
+			css3中的Media Queries模块也支持对外部样式表的引用，使用方法如下：
+				@import url(color.css) screen and (min-width:1000px);
+				<link rel="stylesheet" type='text/css' media='screen and (min-width:1000px)' href='style.css'>
+
+	10.css3中的其他重要样式和属性
+		10.1、颜色相关样式
+			10.1.1、利用alpha通道来设定颜色
+				在css3中，可以通过对RGB颜色设定alpha通道的方法来定义RGBA颜色。RGBA指红色值(A)、绿色值(G)、蓝色值(B)、alpha通道值(A)来定义的颜色.
+				 background-color:rgba(R,G,B,A);
+			10.1.2、对HSL颜色设定alpha通道
+				HSL颜色使用色调(H)、饱和度（S）、亮度(L)来定义颜色。其中，色调值中用0或360表示红色，120表示绿色，240表示蓝色。
+					background-color:hsl(120,100%,50%);
+
+					<style type="text/css">
+						body{
+							background-image: url(img/main.jpg);
+
+						}
+						div{
+							width:100%;
+							height: 100px;
+							color: white;
+						}
+						div#div1{
+							background-color: hsl(120,100%,50%);
+							color: hsla(0,100%,100%,0);
+						}
+						div#div2{
+							background-color: hsla(120,100%,50%,0.5);
+							color: hsla(0,100%,100%,0);
+						}
+					</style>
+					<div id=div1></div>
+					<div id=div2></div>
+			10.1.3、alpha通道与opacity属性的区别
+				使用alpha通道对元素设定的透明度时，可以单独针对元素的背景文字颜色等来指定透明度，而opacity属性只能指定整个元素的透明度。
+			10.1.4、指定颜色值为tansparent 
+				如果将颜色值设置为tansparent，则会将背景、文字或边框等的颜色设定为完全透明。
+		10.2、用户界面相关样式
+			10.2.1、轮廓相关样式
+				outline用来在元素周围绘制一条轮廓线，可以起到突出元素的作用。
+				outline:outline-color outline-style outline-width
+
+				在css3中新增的out-offset属性
+				out-offset属性使用方法很简单，只要给该属性指定一个带像素单位的整数值即可，该整数表示向外偏离多少像素：
+					out-offset:2px;
+			10.2.2、resize属性
+				允许用户通过拖动的方式来修改元素的尺寸。只要用于可以使用overflow属性的任何容器的元素中。
+					<style type="text/css">
+						#div1{
+							background-color: pink;
+							overflow: auto;
+							resize: both;
+							width: 150px;
+							height: 150px;
+						}
+						#div2{
+							background-color: orange;
+							width: 100%;
+							height: 150px;
+						}
+					</style>
+				
+					<div id=div1>示例文字</div>
+					<div id=div2>页面中其他内容</div>
+					<div>
+				resize属性指定的值分为以下几种：
+					none:用户不能修改元素尺寸。
+					both:用户可以修改元素的宽度和高度。
+					horizontal:用户只能修好宽度。
+					vertical:用户只能修改高度。
+					inherit:继承父元素的resize属性值。
+		10.3、取消对元素的样式指定----initial属性值
+			10.3.1、取消对元素的样式指定
+				在css3中新增一个initial属性值，使用这个initial属性值可以直接取消对某个元素的样式指定。
+				<style type="text/css">
+						p{
+							color:blue;
+							font-family: arial;	
+						}
+						p#text01{
+							color: initial;
+							font-family: "微软雅黑";
+						}
+					</style>
+					<p id="text01">示例文字1</p>
+					<p id="text02">示例文字2</p>
+					<p id="text03">示例文字3</p>
+其他：	
 	去掉li前面的点
 		li{
 			list-style-type: none;
